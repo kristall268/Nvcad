@@ -13,8 +13,15 @@ vim.opt.rtp:prepend(lazypath)
 
 
 require("lazy").setup({
-  -- Core plugins
-  require("plugins.colorsheme"),
+  { 
+    "folke/tokyonight.nvim",
+    name = "tokyonight",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.cmd("colorscheme tokyonight")
+    end
+  },
   -- Language Server Protocol
   {
     "neovim/nvim-lspconfig",
@@ -22,6 +29,8 @@ require("lazy").setup({
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "hrsh7th/cmp-nvim-lsp",
+      "jose-elias-alvarez/null-ls.nvim",
+      "stevearc/conform.nvim",
     },
    config = function()
        require("plugins.config.lsp")
@@ -49,18 +58,22 @@ require("lazy").setup({
   -- Telescope
   {
     "nvim-telescope/telescope.nvim",
+    lazy = false,
     tag = "0.1.5",
     dependencies = { "nvim-lua/plenary.nvim" },
+    config = function ()
+      require("plugins.config.telescope")
+    end
   },
 
   -- File Tree
   {
     "nvim-tree/nvim-tree.lua",
+    lazy = false,
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    -- require("plugins.config.nvim-tree.autolaunch"),
-    -- config = function()
-    --   require("plugins.config.nvim-tree.tree")
-    -- end
+    config = function()
+        require("plugins.config.nvim-tree")
+    end
   },
   {
       "folke/noice.nvim",
@@ -69,6 +82,7 @@ require("lazy").setup({
           "MunifTanjim/nvim",
           "rcarriga/nvim-notify",
       },
+      lazy = false,
       config = function()
           require("plugins.config.noice")
       end
@@ -76,9 +90,9 @@ require("lazy").setup({
 
   {
       "nvim-lualine/lualine.nvim",
+      lazy = false,
       dependencies = {
           "nvim-tree/nvim-web-devicons",
-          "folke/tokyonight.nvim",
       },
       config = function()
           require("plugins.config.lualine")
